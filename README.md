@@ -1,95 +1,91 @@
-# Camera unit description
+我本来是想买了个ESP32CAM的，结果。。。貌似好像买错了，固件带的是wifi AP模式。
+这个不好接入HA，所以我要改成STA模式，然后就找到了这里，还好是开源的，
+于是我跟着教程一步一步终于到了编译那步，结果。。。居然编译不通过。。。
+于是看着提示一把错误的都注释掉，之后就编译通过了，完美运行，
+居然还把那个讨厌的红色led灯都搞没了，真开心
 
-English | [中文](https://github.com/m5stack/m5stack-cam-psram/blob/master/README_zh_CN.md)
 
-## Note
 
-Now, M5Stack has four types of camera units, there are respectively [ESP32CAM](https://docs.m5stack.com/#/en/unit/esp32cam), [M5Camera (A Model)](https://docs.m5stack.com/#/en/unit/m5camera), [M5Camera (B Model)](https://docs.m5stack.com/#/en/unit/m5camera), M5CameraX, [M5CameraF](https://docs.m5stack.com/#/en/unit/m5camera_f).
+
+# 摄像机单元固件
+
+现在，M5Stack有四种类型的摄像机单元，分别有[ESP32CAM](https://docs.m5stack.com/#/zh_CN/unit/esp32cam)，[M5Camera (A Model)](https://docs.m5stack.com/#/zh_CN/unit/m5camera)，[M5Camera (B Model)](https://docs.m5stack.com/#/zh_CN/unit/m5camera)，M5CameraX，[M5CameraF](https://docs.m5stack.com/#/zh_CN/unit/m5camera_f)。
 
 <img src="img/camera_boards.png">
 
-The main differences between these cameras are **memory**, **interface**, **lens**, **optional hardware** and **camera shell**。
+这些相机之间的主要区别是**内存**，**接口**，**镜头**，**可选硬件**和**相机外壳**。
 
-## Firmware description
+## 固件说明
 
-The code for this repository is for these boards, and each folder corresponds to a function.
+该仓库的代码适于这些板子，每个文件夹对应一种功能。
 
-- [mpu6050](https://github.com/m5stack/m5stack-cam-psram/tree/master/mpu6050) -> Gyro routine after soldering MPU6050 chip
+- [mpu6050](https://github.com/m5stack/m5stack-cam-psram/tree/master/mpu6050) -> 焊接 MPU6050 芯片之后，陀螺仪的例程
 
-- [qr](https://github.com/m5stack/m5stack-cam-psram/tree/master/qr) -> QR code recognition
+- [qr](https://github.com/m5stack/m5stack-cam-psram/tree/master/qr) -> 二维码识别的例程
 
-- [uart](https://github.com/m5stack/m5stack-cam-psram/tree/master/uart) -> 与 [M5Core](https://docs.m5stack.com/#/zh_CN/core/basic) Routine for serial communication
+- [uart](https://github.com/m5stack/m5stack-cam-psram/tree/master/uart) -> 与 [M5Core](https://docs.m5stack.com/#/zh_CN/core/basic) 之间进行串口通信的例程
 
-- [wifi](https://github.com/m5stack/m5stack-cam-psram/tree/master/wifi) -> Routine for transferring images
+- [wifi](https://github.com/m5stack/m5stack-cam-psram/tree/master/wifi) -> 通过 WIFI 传输图像的例程
 
-- [face_recognize](https://github.com/m5stack/m5stack-cam-psram/tree/master/face_recognize) -> Face recognition routine
+- [face_recognize](https://github.com/m5stack/m5stack-cam-psram/tree/master/face_recognize) -> 人脸识别的例程
 
-**Please note that before compiling the downloaded code, you need to do the following to configure the appropriate board.**
+**注意，在编译下载代码之前，需要先执行以下操作，配置成对应的板子。**
 
-Step 1：build an ESP-IDF development environment
+第一步：搭建 ESP-IDF 开发环境
 
 - [https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html](https://docs.espressif.com/projects/esp-idf/en/latest/get-started/index.html)
 
-Step 2：After setting up the ESP-IDF environment, execute `make menuconfig` in the terminal.
+第二步：搭建好 ESP-IDF 环境之后，在终端 Terminal 中，执行 `make menuconfig`
 
-Step 3：Configure camera model
+第三步：配置摄像头型号
 
 <img src="https://github.com/zhouyangyale/m5stack-cam-psram/blob/master/img/board.png">
 
 <img src="https://github.com/zhouyangyale/m5stack-cam-psram/blob/master/img/board_.png">
 
-Step 4：Open psram
+第四步：打开psram
 
 <img src="https://github.com/zhouyangyale/m5stack-cam-psram/blob/master/img/spi.png">
 
 <img src="https://github.com/zhouyangyale/m5stack-cam-psram/blob/master/img/ignore.png">
 
-Step 5：In the terminal Terminal, execute `make` to ensure that the compilation is correct
+第五步：在终端 Terminal 中，执行 `make`，确保编译无误
 
-Step 6：In the terminal Terminal, execute `make flash` to download the program.
+第六步：在终端 Terminal 中，执行 `make flash`，下载程序
 
-Step 7：In the terminal terminal, execute `make monitor` to open the serial port monitoring.
+第七步：在终端 Terminal 中，执行 `make monitor`，打开串口监视
 
-### Comparison of different versions of cameras
+### 不同版本相机的比较 ( ESP32CAM, M5Camera (A Model), M5Camera (B Model), M5CameraF )
 
-The picture below is their comparison table. (Note: Because the interface has many different pins, so I have made a separate table to compare.)
+下图是他们的对照表。 （注意：因为接口有很多不同的引脚，所以我做了一个单独的表进行比较。）
 
-- If you want to **view** the detailed defference with them, please click [here](https://shimo.im/sheets/gP96C8YTdyjGgKQC).
+- 如果你想**查看**与它们的详细区别，请点击[这里](https://shimo.im/sheets/gP96C8YTdyjGgKQC)。
 
-- If you want to **download** the detailed defference with them, please click [here](https://github.com/m5stack/M5-Schematic/blob/master/Units/m5camera/M5%20Camera%20Detailed%20Comparison.xlsx).
+- 如果您想**下载**细节差异，请点击[这里](https://github.com/m5stack/M5-Schematic/blob/master/Units/m5camera/M5%20Camera%20Detailed%20Comparison.xlsx)。
 
 <img src="https://m5stack.oss-cn-shenzhen.aliyuncs.com/image/m5-docs_table/camera_comparison/camera_main_comparison_en.png">
 
-#### The picture of A model and B model
-
-<img src="https://m5stack.oss-cn-shenzhen.aliyuncs.com/image/m5-docs_table/camera_comparison/diff_A_B.png">
-
-### Interface Comparison
+#### 引脚比较
 
 <img src="https://m5stack.oss-cn-shenzhen.aliyuncs.com/image/m5-docs_table/camera_comparison/CameraPinComparison_en.png">
 
-#### Interface Difference
+<!-- #### 界面差异
 
-The following table shows interface difference between those camera boads based on the `Interface Comparison` table.
+下表显示了基于`Interface Comparison`表的相机电路板之间的接口差异。
 
-<img src="https://m5stack.oss-cn-shenzhen.aliyuncs.com/image/m5-docs_table/camera_comparison/CameraPinDifference_en.png">
+<img src="https://m5stack.oss-cn-shenzhen.aliyuncs.com/image/m5-docs_table/camera_comparison/CameraPinDifference_en.png"> -->
 
-## Important to Remember
+## 重要的是要记住
 
-- Except when using CIF or lower resolution with JPEG, the driver requires PSRAM to be installed and activated.
-- Using YUV or RGB puts a lot of strain on the chip because writing to PSRAM is not particularly fast. The result is that image data might be missing. This is particularly true if WiFi is enabled. If you need RGB data, it is recommended that JPEG is captured and then turned into RGB using `fmt2rgb888` or `fmt2bmp`/`frame2bmp`.
-- When 1 frame buffer is used, the driver will wait for the current frame to finish (VSYNC) and start I2S DMA. After the frame is acquired, I2S will be stopped and the frame buffer returned to the application. This approach gives more control over the system, but results in longer time to get the frame.
-- When 2 or more frame bufers are used, I2S is running in continuous mode and each frame is pushed to a queue that the application can access. This approach puts more strain on the CPU/Memory, but allows for double the frame rate. Please use only with JPEG.
-
-## Installation Instructions
-
-- Clone or download and extract the repository to the components folder of your ESP-IDF project
-- `Make`
+- 除了使用带有JPEG或CIF更低分辨率外，驱动程序还需要安装和激活PSRAM。
+- 使用YUV或RGB会给芯片带来很大的压力，因为写入PSRAM并不是特别快。 结果是图像数据可能丢失。 如果启用WiFi，则尤其如此。 如果您需要RGB数据，建议使用`fmt2rgb888`或`fmt2bmp`/`frame2bmp`捕获JPEG然后转换为RGB。
+- 当使用1帧缓冲区时，驱动程序将等待当前帧完成（VSYNC）并启动I2S DMA。 获取帧后，I2S将停止，帧缓冲区返回到应用程序。 这种方法可以更好地控制系统，但会导致获得帧的时间更长。
+- 当使用2个或更多帧缓冲时，I2S以连续模式运行，每个帧被推送到应用程序可以访问的队列。 这种方法会给CPU/Memory带来更大的压力，但允许帧速率加倍。 请仅使用JPEG。
 
 ## API
 
 ### Get img data
-
+0
 ```c
 camera_fb_t * fb = NULL;
 // will get a img frame
@@ -111,10 +107,12 @@ esp_camera_fb_return(fb);
 sensor_t *s = esp_camera_sensor_get();
 s->set_framesize(s, FRAMESIZE_VGA);
 s->set_quality(s, 10);
+s->set_vflip(s, 1);
+s->set_hmirror(s, 1);
 ...
 ```
 
-Detailed view [sensor.h](components/esp32-camera/driver/include/sensor.h)
+Detailed view [sensor.h](https://github.com/m5stack/m5stack-cam-psram/blob/master/mpu6050/components/esp32-camera/driver/include/sensor.h)
 
 ## Examples
 
