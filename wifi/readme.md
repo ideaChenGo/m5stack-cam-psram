@@ -18,3 +18,15 @@ WIFI_STA:
     第一步：修改程序要连接的wifi热点名称以及密码
 
     第二步：打开摄像头获取到的ip网页端即可
+
+
+## 一些操作步骤（windows）
+
+
+打开快捷方式： ESP-IDF Command Prompt (cmd.exe)
+
+打开对应的目录：cd F:\git\m5stack-cam-psram\wifi\wifi_sta
+
+编译: idf.py build
+
+查看串口: idf.py -p COM7 monitor

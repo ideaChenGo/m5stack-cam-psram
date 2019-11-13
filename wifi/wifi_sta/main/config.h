@@ -16,14 +16,13 @@
 #define CAM_PIN_D3      5
 #define CAM_PIN_D2      34
 #define CAM_PIN_D1      35
-#define CAM_PIN_D0      32
+//#define CAM_PIN_D0      32
 
 #define CAM_PIN_HREF    26
 #define CAM_PIN_PCLK    21
 
 #define CAM_XCLK_FREQ   10000000
-#define CAMERA_LED_GPIO 14
-
+//#define CAMERA_LED_GPIO 14
 
 #ifdef CONFIG_ESP32_CAMERA_BOARD
     #define CAM_PIN_SIOD    25

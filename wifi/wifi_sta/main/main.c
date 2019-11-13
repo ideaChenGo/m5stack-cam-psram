@@ -24,8 +24,9 @@ static const char* TAG = "camera";
 #define ESP_WIFI_PASS ""
 #else
 
-#define ESP_WIFI_SSID "M5-2.4G"
-#define ESP_WIFI_PASS "Office@888888"
+// 这里写入自己WIFI的用户和密码
+#define ESP_WIFI_SSID "weihai"
+#define ESP_WIFI_PASS "weihai@123"
 
 #endif
 
@@ -39,7 +40,8 @@ static const char* _STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %
 static EventGroupHandle_t s_wifi_event_group;
 static ip4_addr_t s_ip_addr;
 const int CONNECTED_BIT = BIT0;
-extern void led_brightness(int duty);
+// 这里注释掉，不然会无法编译，不知道为啥
+// extern void led_brightness(int duty);
 static camera_config_t camera_config = {
     .pin_reset = CAM_PIN_RESET,
     .pin_xclk = CAM_PIN_XCLK,
@@ -63,8 +65,41 @@ static camera_config_t camera_config = {
     .ledc_timer = LEDC_TIMER_0,
     .ledc_channel = LEDC_CHANNEL_0,
 
-    .pixel_format = PIXFORMAT_JPEG,//YUV422,GRAYSCALE,RGB565,JPEG
-    .frame_size = FRAMESIZE_SVGA,//QQVGA-UXGA Do not use sizes above QVGA when not JPEG
+    .pixel_format = PIXFORMAT_JPEG,//YUV422,GRAYSCALE,RGB565,JPEG    
+    /** 定义参考值
+    FRAMESIZE_QQVGA,    // 160x120
+    FRAMESIZE_QQVGA2,   // 128x160
+    FRAMESIZE_QCIF,     // 176x144
+    FRAMESIZE_HQVGA,    // 240x176
+    FRAMESIZE_QVGA,     // 320x240
+    FRAMESIZE_CIF,      // 400x296
+    FRAMESIZE_VGA,      // 640x480
+    FRAMESIZE_SVGA,     // 800x600
+    FRAMESIZE_XGA,      // 1024x768
+    FRAMESIZE_SXGA,     // 1280x1024
+    FRAMESIZE_UXGA,     // 1600x1200
+    FRAMESIZE_QXGA,     // 2048*1536
+     * 
+     * 这是本来是FRAMESIZE_SVGA，然后我改成了FRAMESIZE_QVGA
+     * 因为800x600的分辨率太卡了，所以改成320x240的分辨率
+     * FRAMESIZE_SVGA
+     *   分辨率：800x600
+     *   输出：18kb左右
+     * 
+     * FRAMESIZE_VGA
+     *   分辨率：640×480
+     *   输出：9kb左右
+     * 
+     * FRAMESIZE_CIF
+     *   分辨率：400x296
+     *   输出：5kb左右
+     * 
+     * FRAMESIZE_QVGA
+     *   分辨率：320x240
+     *   输出：6kb左右
+     * 
+     */
+    .frame_size = FRAMESIZE_CIF,//QQVGA-UXGA Do not use sizes above QVGA when not JPEG
 
     .jpeg_quality = 15, //0-63 lower number means higher quality
     .fb_count = 2 //if more than one, i2s runs in continuous mode. Use only with JPEG
@@ -91,7 +126,8 @@ void app_main()
             vTaskDelay(10);
         }
     } else {
-        led_brightness(20);
+        // 这里注释掉，不然会无法编译，不知道为啥
+        // led_brightness(20);
     }
 
 #ifdef FISH_EYE_CAM
